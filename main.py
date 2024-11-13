@@ -1,31 +1,15 @@
-import os
-from openai import OpenAI
-from dotenv import load_dotenv
-
-def create_openai_client():
-    """Create and return an OpenAI client."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if api_key is None:
-        raise ValueError("API key not found. Please set the OPENAI_API_KEY environment variable.")
-    return OpenAI(api_key=api_key)
-
-def get_chat_response(client, message, model="gpt-3.5-turbo"):
-    """Get a chat response from the OpenAI API."""
-    chat_completion = client.chat.completions.create(
-        messages=[{"role": "user", "content": message}],
-        model=model,
-    )
-    return chat_completion
+# import parse_resume
+from src import tailor_resume
+import json
 
 def main():
-    """Main function to execute the script."""
-    load_dotenv()  # Load environment variables from .env file
-    client = create_openai_client()
-    message = "Tell me this is a test. Also tell me a random joke"
-    response = get_chat_response(client, message)
-    
-    # Print the response content
-    print(response.choices[0].message.content)
+    # filepath = "sample_resume.docx"
+    # Parse the resume
+    # parsed_data = parse_resume.parse_resume(filepath)
+
+    # Tailor the resume
+    tailored_content = tailor_resume.tailor_experience()
+    print(tailored_content)
 
 if __name__ == "__main__":
     main()
